@@ -1,0 +1,9 @@
+@import url("./normalize.css");
+
+* {
+  -webkit-overflow-scrolling: touch;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
