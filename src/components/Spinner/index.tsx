@@ -1,9 +1,5 @@
 import Spin from "./components/Spin";
-
-interface SpinnerType {
-  loading: boolean;
-  children: JSX.Element;
-}
+import type { SpinnerType } from "./type";
 
 export default ({ loading, children }: SpinnerType) => {
   return loading ? (

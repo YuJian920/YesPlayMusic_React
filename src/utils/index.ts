@@ -1,7 +1,7 @@
 /**
  * 毫秒转换秒
- * @param millisecond 
- * @returns 
+ * @param millisecond
+ * @returns
  */
 export const millisToMinutesAndSeconds = (millisecond: number) => {
   const minutes = Math.floor(millisecond / 60000);
