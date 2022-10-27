@@ -15,11 +15,11 @@ export default ({ dataSoure }: { dataSoure: GetSongDetailType["song"] }) => {
         <div className="flex flex-col pl-4">
           <div className="text-lg font-semibold break-all overflow-hidden">
             <span>{dataSoure.name}</span>
-            {dataSoure.alia.length && (
+            {dataSoure.alia.length ? (
               <span className="text-[#7a7a7a] opacity-70 mr-1">
-                （{dataSoure.alia[0]}）
+                （{dataSoure.alia[0] || ""}）
               </span>
-            )}
+            ) : null}
           </div>
           <div className="text-sm opacity-70">
             <Link className="hover:underline" to="/">
@@ -38,7 +38,7 @@ export default ({ dataSoure }: { dataSoure: GetSongDetailType["song"] }) => {
           <LikeIcon width="18" height="18" color="#335eea" />
         </div>
         <span className="text-base justify-end opacity-90 tabular-nums">
-          {millisToMinutesAndSeconds(dataSoure.dt) || 0.00}
+          {millisToMinutesAndSeconds(dataSoure.dt) || 0.0}
         </span>
       </div>
     </div>

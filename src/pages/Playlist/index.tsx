@@ -1,25 +1,22 @@
 import PlaylistInfo from "../../components/PlaylistInfo";
 import PlaylistItem from "../../components/PlaylistItem";
 import Spinner from "../../components/Spinner";
-import { usePlayListDetail } from "./hooks";
+import { usePlaylistDetail, usePlaylistFullSong } from "./hooks";
 
 export default () => {
-  const { data, isLoading } = usePlayListDetail();
+  const { data: detailData, isLoading: detailLoading } = usePlaylistDetail();
+  const { data: songData, isLoading: songLoading } = usePlaylistFullSong(detailData?.trackIds || []);
 
   return (
-    <Spinner loading={isLoading}>
-      <>
-        <PlaylistInfo
-          coverUrl={data?.coverImgUrl || ""}
-          description={data?.description || ""}
-          name={data?.name || ""}
-        />
-        <div>
-          {data?.tracks.map((mapItem) => (
-            <PlaylistItem key={mapItem.name} dataSoure={mapItem} />
-          ))}
-        </div>
-      </>
-    </Spinner>
+    <>
+      <Spinner loading={detailLoading}>
+        <PlaylistInfo dataSoure={detailData!} />
+      </Spinner>
+      <Spinner loading={songLoading} height="20%">
+        {songData?.songs.map((mapItem) => (
+          <PlaylistItem key={mapItem.name} dataSoure={mapItem} />
+        ))}
+      </Spinner>
+    </>
   );
 };
