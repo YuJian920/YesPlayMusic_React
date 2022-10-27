@@ -1,4 +1,4 @@
-import { BaseResponse } from "../type";
+import { AlbumType, ArtistType, BaseResponse } from "../../type";
 
 /**
  * 所有榜单
@@ -44,20 +44,21 @@ export interface PlayListDetailType {
   name: string;
   coverImgUrl: string;
   description: string;
-  tracks: PlayListDetailListType[];
-  userId: number;
-}
-
-export interface PlayListDetailListType {
-  al: {
+  trackIds: {
     id: number;
-    name: string;
-    picUrl: string;
-  };
-  dt: number;
-  ar: {
-    id: number;
+  }[];
+  tracks: {
+    al: AlbumType;
+    dt: number;
+    ar: ArtistType[];
+    alia: string[];
     name: string;
   }[];
-  name: string;
+  userId: number;
+  updateTime: number;
+  trackCount: number;
+  creator: {
+    userId: number;
+    nickname: string;
+  };
 }

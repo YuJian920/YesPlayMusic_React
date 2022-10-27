@@ -1,6 +1,6 @@
 import type { IconType } from "./type";
 
-export const PlayIcon: IconType = ({ width, height, color }) => (
+export const PlayIcon = ({ width, height, color }: IconType) => (
   <svg
     width={width}
     height={height}
@@ -18,7 +18,7 @@ export const PlayIcon: IconType = ({ width, height, color }) => (
   </svg>
 );
 
-export const LikeIcon: IconType = ({ width, height, color }) => (
+export const LikeIcon = ({ width, height, color }: IconType) => (
   <svg
     width={width}
     height={height}
@@ -37,7 +37,7 @@ export const LikeIcon: IconType = ({ width, height, color }) => (
   </svg>
 );
 
-export const MoreIcon: IconType = ({ width, height, color }) => (
+export const MoreIcon = ({ width, height, color }: IconType) => (
   <svg
     width={width}
     height={height}

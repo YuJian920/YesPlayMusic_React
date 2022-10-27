@@ -1,10 +1,8 @@
 import type { CSSProperties } from "react";
-import type { PersonalizedListType } from "../../api/type";
+import type { PersonalizedListType } from "../../api/playlist/type";
 
 export interface AlbumListType {
-  (props: {
-    dataSoure: PersonalizedListType[];
-    title: string;
-    style?: CSSProperties;
-  }): JSX.Element;
+  dataSoure: PersonalizedListType[];
+  title: string;
+  style?: CSSProperties;
 }

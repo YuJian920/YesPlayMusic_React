@@ -1,4 +1,5 @@
-import request from "../utils/request";
+import request from "../../utils/request";
+import { getSongDetail } from "../song";
 import type {
   GetPersonalizedListType,
   GetTopListType,
@@ -30,9 +31,7 @@ export const getPersonalizedList = async (limit: number) => {
 export const getPlayListDetail = async (id: string) => {
   const { playlist } = await request<GetPlayListDetailType>(
     "/playlist/detail",
-    {
-      data: { id },
-    }
+    { id }
   );
 
   return playlist;

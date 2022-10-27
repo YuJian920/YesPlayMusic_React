@@ -1,8 +1,9 @@
 import AlbumUnit from "../AlbumUnit";
 import type { AlbumListType } from "./type";
 
-const AlbumList: AlbumListType = (props) => {
+const AlbumList = (props: AlbumListType) => {
   const { dataSoure, title, style } = props;
+
   return (
     <>
       <span className="flex mb-5 text-[28px] font-bold" style={style}>

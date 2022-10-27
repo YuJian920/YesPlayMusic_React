@@ -1,10 +1,7 @@
 import { stringify } from "qs";
+import type { RequestOptions } from "../type";
 
-const baseURL = "/api";
-
-interface RequestOptions {
-  data?: object | string;
-}
+const baseURL = import.meta.env.DEV ? "/api" : "";
 
 export default async <T>(
   endpoint: string,

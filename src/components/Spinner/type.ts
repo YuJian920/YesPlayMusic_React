@@ -1,4 +1,5 @@
 export interface SpinnerType {
   loading: boolean;
-  children: JSX.Element;
+  height?: string | number;
+  children: JSX.Element | JSX.Element[] | undefined;
 }

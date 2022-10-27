@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getPersonalizedList, getTopList } from "../../../api/playList";
+import { getTopList, getPersonalizedList } from "../../../api/playlist";
 
 export const useTopList = () => {
   return useQuery(["toplist"], () => getTopList());

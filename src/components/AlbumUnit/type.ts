@@ -1,7 +1,6 @@
-import type { PersonalizedListType } from "../../api/type";
+import { PersonalizedListType } from "../../api/playlist/type";
 
-export interface AlbumUnitType {
-  (
-    props: PersonalizedListType & { des?: string; circle?: boolean }
-  ): JSX.Element;
-}
+export type AlbumUnitType = PersonalizedListType & {
+  des?: string;
+  circle?: boolean;
+};

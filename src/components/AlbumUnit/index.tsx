@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 import { PlayIcon } from "../IconPark";
 import type { AlbumUnitType } from "./type";
 
-const AlbumUnit: AlbumUnitType = (props) => {
+const AlbumUnit = (props: AlbumUnitType) => {
   const { id, name, picUrl, des, circle = false } = props;
+
   return (
     <div>
       <Link to={`/playlist/${id}`}>
