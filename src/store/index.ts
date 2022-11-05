@@ -7,11 +7,15 @@ export const usePlayMusicStore = create<PlayMusicStateType>((set, get) => ({
   seek: 0,
   duration: 0,
   progress: 0,
+  lyric: [],
 
   setInstance: (instance) => {
     set(() => ({ instance }));
     get().eventListener();
     return instance;
+  },
+  setLyric: (lyric) => {
+    set(() => ({ lyric }));
   },
   toggleStatus: async (status) => {
     if (status === undefined) status = !get().status;

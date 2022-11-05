@@ -1,8 +1,4 @@
-interface ParsedLyric {
-  time: number;
-  rawTime: string;
-  content: string;
-}
+import { ParsedLyric } from "../type";
 
 const extractLrcRegex =
   /^(?<lyricTimestamps>(?:\[.+?\])+)(?!\[)(?<content>.+)$/gm;

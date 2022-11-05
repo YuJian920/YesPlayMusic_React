@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { usePlayMusicStore } from "../../store";
-import { parseLyric } from "../../utils/parserLyric";
 import {
   LikeIcon,
   NextIcon,
@@ -11,50 +10,42 @@ import {
   PreIcon,
   ShuffleIcon,
 } from "../IconPark";
+import LyricLine from "../LyricLine";
 import MusicProgress from "../MusicProgress";
-import { lyric } from "./data.json";
+import { parseLyric } from "../../utils/parserLyric";
+import { lyric } from "../Lyrics/data.json";
 import music from "./music.mp3";
 
 export default () => {
-  const lyricRef = useRef<HTMLDivElement>(null);
-  const [lyricData, setLyric] = useState(parseLyric(lyric));
+  const coverRef = useRef<HTMLDivElement>(null);
+  const [showLyric, setShowLyric] = useState(true);
 
-  const playInstance = usePlayMusicStore((state) => state.instance);
   const setPlayInstance = usePlayMusicStore((state) => state.setInstance);
+  const setPlayLyric = usePlayMusicStore((state) => state.setLyric);
   const playStatus = usePlayMusicStore((state) => state.status);
   const setPlayStatus = usePlayMusicStore((state) => state.toggleStatus);
-  const playSeek = usePlayMusicStore((state) => state.seek);
 
   useEffect(() => {
     setPlayInstance(new Audio(music));
+    setPlayLyric(parseLyric(lyric))
   }, []);
 
-  const lyricIndex = useMemo(
-    () =>
-      lyricData.findIndex((findItem, index, oringArr) => {
-        if (index === oringArr.length - 1) return oringArr.length;
-        return playSeek >= findItem.time && playSeek < oringArr[index + 1].time;
-      }),
-    [playSeek]
-  );
-
+  // 歌曲封面的弹簧缩放效果
+  const coverSpringStyle = playStatus ? { transform: "scale(1.05)" } : { transform: "scale(0.95)" };
   useEffect(() => {
-    if (!lyricRef.current) return;
-    // lyricRef.current.scrollTop = clien.offsetHeight * (lyricIndex + 1) - clien.offsetHeight / 2;
-
-    const lryicEle = lyricRef.current.childNodes[lyricIndex + 1] as HTMLSpanElement;
-    lryicEle && lryicEle.scrollIntoView({ behavior: "smooth", block: "center" });
-  }, [lyricIndex]);
-
-  const onLyricItemClick = (time: number) => {
-    if (!playInstance) return;
-    playInstance.currentTime = time;
-  };
+    if (!coverRef.current) return;
+    if (playStatus === true) coverRef.current.style.animation = "spring-show 0.6s";
+    else coverRef.current.style.animation = "";
+  }, [playStatus]);
 
   return (
     <div className="fixed z-50 inset-0 flex w-screen h-screen bg-[#222222] select-none">
-      <div className="flex flex-col justify-center items-center w-1/2">
-        <div className="relative w-[54vh] h-[54vh]">
+      <div className="flex flex-1 flex-col justify-center items-center">
+        <div
+          className="relative w-[53vh] h-[53vh] transition-all"
+          ref={coverRef}
+          style={coverSpringStyle}
+        >
           <img
             className="rounded-xl"
             src="https://p2.music.126.net/aG5zqxkBRfLiV7A8W0iwgA==/109951166702962263.jpg?param=1024y1024"
@@ -110,33 +101,19 @@ export default () => {
           <div className="hover:bg-white/10 rounded-xl transition-all cursor-pointer mx-2">
             <NextIcon width="36" height="36" color="#ffffff" />
           </div>
-          <div className="hover:bg-white/10 rounded-xl transition-all cursor-pointer w-8 h-8 flex justify-center items-center ml-4">
+          <div
+            className="hover:bg-white/10 rounded-xl transition-all cursor-pointer w-8 h-8 flex justify-center items-center ml-4"
+            onClick={() => setShowLyric(!showLyric)}
+          >
             <ShuffleIcon width="14" height="14" color="#ffffff" />
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center w-1/2 overflow-y-auto">
-        <div
-          className="flex flex-col text-3xl text-white font-semibold"
-          ref={lyricRef}
-        >
-          <span className="mt-[50vh]" />
-          {lyricData.map((mapItem, index) => (
-            <span
-              className="my-0.5 py-3 px-5 rounded-xl hover:bg-white/10 transition-all duration-[350ms] text-white/30 cursor-pointer"
-              style={
-                lyricIndex === index
-                  ? { color: "#ffffff", fontSize: 35, filter: "blur(0px)" }
-                  : { filter: "blur(1px)" }
-              }
-              key={mapItem.time}
-              onClick={() => onLyricItemClick(mapItem.time)}
-            >
-              {mapItem.content}
-            </span>
-          ))}
+      {showLyric && (
+        <div className="flex flex-col flex-1 items-center overflow-y-auto noScroll">
+          <LyricLine />
         </div>
-      </div>
+      )}
     </div>
   );
 };

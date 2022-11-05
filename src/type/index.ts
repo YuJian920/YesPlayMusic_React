@@ -32,3 +32,12 @@ export interface ArtistType {
   name: string;
   tns: any[];
 }
+
+/**
+ * 歌词类型
+ */
+export interface ParsedLyric {
+  time: number;
+  rawTime: string;
+  content: string;
+}
