@@ -22,15 +22,18 @@ export const usePlayMusicStore = create<PlayMusicStateType>((set, get) => ({
     set(() => ({ status }));
   },
   eventListener: (remove = false) => {
-    const { instance, seekUpdate } = get();
+    const { instance, seekUpdate, toggleStatus } = get();
+    const pauseAudio = () => toggleStatus(false);
 
     if (!instance) return;
     if (remove) {
       instance.removeEventListener("timeupdate", seekUpdate);
+      instance.removeEventListener("ended", pauseAudio);
       return;
     }
 
     instance.addEventListener("timeupdate", seekUpdate);
+    instance.addEventListener("ended", pauseAudio);
   },
   seekUpdate: () => {
     const { instance } = get();

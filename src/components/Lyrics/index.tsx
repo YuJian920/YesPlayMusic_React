@@ -12,7 +12,8 @@ import {
   ShuffleIcon,
 } from "../IconPark";
 import MusicProgress from "../MusicProgress";
-import { lyric, url } from "./data.json";
+import { lyric } from "./data.json";
+import music from "./music.mp3";
 
 export default () => {
   const lyricRef = useRef<HTMLDivElement>(null);
@@ -25,20 +26,24 @@ export default () => {
   const playSeek = usePlayMusicStore((state) => state.seek);
 
   useEffect(() => {
-    setPlayInstance(new Audio(url));
+    setPlayInstance(new Audio(music));
   }, []);
 
   const lyricIndex = useMemo(
-    () => lyricData.findIndex((findItem) => playSeek < findItem.time) - 1,
+    () =>
+      lyricData.findIndex((findItem, index, oringArr) => {
+        if (index === oringArr.length - 1) return oringArr.length;
+        return playSeek >= findItem.time && playSeek < oringArr[index + 1].time;
+      }),
     [playSeek]
   );
 
   useEffect(() => {
     if (!lyricRef.current) return;
-    const clien = lyricRef.current.childNodes[lyricIndex] as HTMLSpanElement;
     // lyricRef.current.scrollTop = clien.offsetHeight * (lyricIndex + 1) - clien.offsetHeight / 2;
 
-    clien.scrollIntoView({ behavior: "smooth", block: "center" });
+    const lryicEle = lyricRef.current.childNodes[lyricIndex + 1] as HTMLSpanElement;
+    lryicEle && lryicEle.scrollIntoView({ behavior: "smooth", block: "center" });
   }, [lyricIndex]);
 
   const onLyricItemClick = (time: number) => {
@@ -110,16 +115,20 @@ export default () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center w-1/2">
+      <div className="flex flex-col items-center w-1/2 overflow-y-auto">
         <div
-          className="flex flex-col text-3xl text-white font-semibold overflow-hidden"
+          className="flex flex-col text-3xl text-white font-semibold"
           ref={lyricRef}
         >
           <span className="mt-[50vh]" />
           {lyricData.map((mapItem, index) => (
             <span
               className="my-0.5 py-3 px-5 rounded-xl hover:bg-white/10 transition-all duration-[350ms] text-white/30 cursor-pointer"
-              style={lyricIndex === index ? { color: "#ffffff" } : {}}
+              style={
+                lyricIndex === index
+                  ? { color: "#ffffff", fontSize: 35, filter: "blur(0px)" }
+                  : { filter: "blur(1px)" }
+              }
               key={mapItem.time}
               onClick={() => onLyricItemClick(mapItem.time)}
             >
