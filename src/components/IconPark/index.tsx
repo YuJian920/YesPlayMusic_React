@@ -240,3 +240,21 @@ export const PlayCycleIcon = ({ width, height, color }: IconType) => (
     />
   </svg>
 );
+
+export const DownIcon = ({ width, height, color }: IconType) => (
+  <svg
+    width={width}
+    height={height}
+    viewBox="0 0 48 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M36 18L24 30L12 18"
+      stroke={color}
+      strokeWidth="4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);

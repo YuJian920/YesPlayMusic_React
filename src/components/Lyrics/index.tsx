@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { usePlayMusicStore } from "../../store";
 import {
+  DownIcon,
   LikeIcon,
   NextIcon,
   PauseIcon,
@@ -20,26 +21,38 @@ export default () => {
   const coverRef = useRef<HTMLDivElement>(null);
   const [showLyric, setShowLyric] = useState(true);
 
+  const isPlayStatus = usePlayMusicStore((state) => state.isPlay);
+  const isShowPlayer = usePlayMusicStore((state) => state.isShowPlayer);
+
   const setPlayInstance = usePlayMusicStore((state) => state.setInstance);
   const setPlayLyric = usePlayMusicStore((state) => state.setLyric);
-  const playStatus = usePlayMusicStore((state) => state.status);
-  const setPlayStatus = usePlayMusicStore((state) => state.toggleStatus);
+  const setPlayStatus = usePlayMusicStore((state) => state.togglePlay);
+  const setPlayShow = usePlayMusicStore((state) => state.togglePlayerShow);
 
   useEffect(() => {
     setPlayInstance(new Audio(music));
-    setPlayLyric(parseLyric(lyric))
+    setPlayLyric(parseLyric(lyric));
   }, []);
 
   // 歌曲封面的弹簧缩放效果
-  const coverSpringStyle = playStatus ? { transform: "scale(1.05)" } : { transform: "scale(0.95)" };
+  const coverSpringStyle = isPlayStatus ? { transform: "scale(1.05)" } : { transform: "scale(0.95)" };
   useEffect(() => {
     if (!coverRef.current) return;
-    if (playStatus === true) coverRef.current.style.animation = "spring-show 0.6s";
+    if (isPlayStatus === true) coverRef.current.style.animation = "spring-show 0.6s";
     else coverRef.current.style.animation = "";
-  }, [playStatus]);
+  }, [isPlayStatus]);
 
   return (
-    <div className="fixed z-50 inset-0 flex w-screen h-screen bg-[#222222] select-none">
+    <div
+      className="fixed z-50 inset-0 top-full flex w-screen h-screen bg-[#222222] select-none transition-all duration-[400ms]"
+      style={isShowPlayer ? { top: 0 } : {}}
+    >
+      <div
+        className="absolute z-20 right-6 top-7 hover:bg-white/10 rounded-xl transition-all cursor-pointer p-2.5"
+        onClick={() => setPlayShow(false)}
+      >
+        <DownIcon width="26" height="26" color="#ffffff79" />
+      </div>
       <div className="flex flex-1 flex-col justify-center items-center">
         <div
           className="relative w-[53vh] h-[53vh] transition-all"
@@ -92,7 +105,7 @@ export default () => {
             className="hover:bg-white/10 rounded-xl transition-all cursor-pointer mx-2"
             onClick={() => setPlayStatus()}
           >
-            {playStatus ? (
+            {isPlayStatus ? (
               <PauseIcon width="50" height="50" color="#ffffff" />
             ) : (
               <PlayIcon width="50" height="50" color="#ffffff" />

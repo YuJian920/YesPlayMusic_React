@@ -2,32 +2,72 @@ import create from "zustand";
 import type { PlayMusicStateType } from "./type";
 
 export const usePlayMusicStore = create<PlayMusicStateType>((set, get) => ({
+  // 歌词页面显示状态
+  isShowPlayer: false,
+  // 歌曲播放状态
+  isPlay: false,
+
+  // 歌曲 Audio 实例
   instance: null,
-  status: false,
+  // 当前播放市场
   seek: 0,
+  // 歌曲总时长
   duration: 0,
+  // 当前播放进度
   progress: 0,
+  // 歌词数组
   lyric: [],
 
+  /**
+   * 切换歌词页显示，参数为空时自动取反
+   * @param isShowPlayer 
+   */
+  togglePlayerShow: (isShowPlayer) => {
+    if (!isShowPlayer === undefined) isShowPlayer = !get().isShowPlayer;
+
+    set(() => ({ isShowPlayer }));
+  },
+
+  /**
+   * 设置 Audio 实例
+   * @param instance 
+   * @returns 
+   */
   setInstance: (instance) => {
     set(() => ({ instance }));
     get().eventListener();
     return instance;
   },
+
+  /**
+   * 设置歌词数据
+   * @param lyric 
+   */
   setLyric: (lyric) => {
     set(() => ({ lyric }));
   },
-  toggleStatus: async (status) => {
-    if (status === undefined) status = !get().status;
 
-    if (status) await get().instance?.play();
+  /**
+   * 切换播放状态，参数为空时自动取反
+   * @param isPlay 
+   */
+  togglePlay: async (isPlay) => {
+    if (isPlay === undefined) isPlay = !get().isPlay;
+
+    if (isPlay) await get().instance?.play();
     else get().instance?.pause();
 
-    set(() => ({ status }));
+    set(() => ({ isPlay }));
   },
+
+  /**
+   * 监听播放状态
+   * @param remove 
+   * @returns 
+   */
   eventListener: (remove = false) => {
-    const { instance, seekUpdate, toggleStatus } = get();
-    const pauseAudio = () => toggleStatus(false);
+    const { instance, seekUpdate, togglePlay } = get();
+    const pauseAudio = () => togglePlay(false);
 
     if (!instance) return;
     if (remove) {
@@ -39,6 +79,10 @@ export const usePlayMusicStore = create<PlayMusicStateType>((set, get) => ({
     instance.addEventListener("timeupdate", seekUpdate);
     instance.addEventListener("ended", pauseAudio);
   },
+
+  /**
+   * 调整歌曲进度
+   */
   seekUpdate: () => {
     const { instance } = get();
 

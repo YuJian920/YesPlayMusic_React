@@ -1,16 +1,18 @@
 import { ParsedLyric } from "../type";
 
 export interface PlayMusicStateType {
+  isShowPlayer: boolean;
   instance: HTMLAudioElement | null;
-  status: boolean;
+  isPlay: boolean;
   seek: number;
   duration: number;
   progress: number;
   lyric: ParsedLyric[];
 
+  togglePlayerShow: (isShowPlayer?: boolean) => void;
   setInstance: (instance: HTMLAudioElement) => HTMLAudioElement;
   setLyric: (instance: ParsedLyric[]) => void;
-  toggleStatus: (status?: boolean) => void;
+  togglePlay: (isPlay?: boolean) => void;
   eventListener: (remove?: boolean) => void;
   seekUpdate: () => void;
 }
