@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { getSongLyric } from "../../api/song";
 import { usePlayMusicStore } from "../../store";
+import { parseLyric } from "../../utils/parserLyric";
 import {
   DownIcon,
   LikeIcon,
@@ -9,13 +11,10 @@ import {
   PlayCycleIcon,
   PlayIcon,
   PreIcon,
-  ShuffleIcon,
+  ShuffleIcon
 } from "../IconPark";
 import LyricLine from "../LyricLine";
 import MusicProgress from "../MusicProgress";
-import { parseLyric } from "../../utils/parserLyric";
-import { lyric } from "../Lyrics/data.json";
-import music from "./music.mp3";
 
 export default () => {
   const coverRef = useRef<HTMLDivElement>(null);
@@ -23,16 +22,16 @@ export default () => {
 
   const isPlayStatus = usePlayMusicStore((state) => state.isPlay);
   const isShowPlayer = usePlayMusicStore((state) => state.isShowPlayer);
+  const currentPlay = usePlayMusicStore((state) => state.currentPlay);
 
-  const setPlayInstance = usePlayMusicStore((state) => state.setInstance);
   const setPlayLyric = usePlayMusicStore((state) => state.setLyric);
   const setPlayStatus = usePlayMusicStore((state) => state.togglePlay);
   const setPlayShow = usePlayMusicStore((state) => state.togglePlayerShow);
 
   useEffect(() => {
-    setPlayInstance(new Audio(music));
-    setPlayLyric(parseLyric(lyric));
-  }, []);
+    if (!currentPlay?.id) return;
+    getMusicLyric(currentPlay?.id || 0);
+  }, [currentPlay?.id]);
 
   // 歌曲封面的弹簧缩放效果
   const coverSpringStyle = isPlayStatus ? { transform: "scale(1.05)" } : { transform: "scale(0.95)" };
@@ -41,6 +40,15 @@ export default () => {
     if (isPlayStatus === true) coverRef.current.style.animation = "spring-show 0.6s";
     else coverRef.current.style.animation = "";
   }, [isPlayStatus]);
+
+  /**
+   * 获取歌词
+   * @param id 
+   */
+  const getMusicLyric = async (id: number) => {
+    const { lrc } = await getSongLyric(id);
+    setPlayLyric(parseLyric(lrc?.lyric || ""));
+  };
 
   return (
     <div
@@ -61,12 +69,12 @@ export default () => {
         >
           <img
             className="rounded-xl"
-            src="https://p2.music.126.net/aG5zqxkBRfLiV7A8W0iwgA==/109951166702962263.jpg?param=1024y1024"
+            src={currentPlay?.al.picUrl || ""}
             alt=""
           />
           <img
             className="absolute z-[-1] top-3 rounded-xl scale-90 blur-xl opacity-70"
-            src="https://p2.music.126.net/aG5zqxkBRfLiV7A8W0iwgA==/109951166702962263.jpg?param=1024y1024"
+            src={currentPlay?.al.picUrl || ""}
           />
         </div>
         <div className="flex justify-between items-center w-[54vh] mt-6">
@@ -75,15 +83,15 @@ export default () => {
               className="text-2xl font-semibold opacity-90 hover:underline"
               to="/"
             >
-              孤勇者
+              {currentPlay?.name || ""}
             </Link>
             <div className="text-base opacity-60">
               <Link className="hover:underline" to="/">
-                陈奕迅
+                {currentPlay?.ar[0].name || ""}
               </Link>
               <span> - </span>
               <Link className="hover:underline" to="/">
-                孤勇者
+                {currentPlay?.al.name || ""}
               </Link>
             </div>
           </div>

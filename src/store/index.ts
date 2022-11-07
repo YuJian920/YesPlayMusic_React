@@ -17,31 +17,35 @@ export const usePlayMusicStore = create<PlayMusicStateType>((set, get) => ({
   progress: 0,
   // 歌词数组
   lyric: [],
+  currentPlay: null,
 
   /**
    * 切换歌词页显示，参数为空时自动取反
-   * @param isShowPlayer 
+   * @param isShowPlayer
    */
   togglePlayerShow: (isShowPlayer) => {
-    if (!isShowPlayer === undefined) isShowPlayer = !get().isShowPlayer;
+    if (isShowPlayer === undefined) isShowPlayer = !get().isShowPlayer;
 
     set(() => ({ isShowPlayer }));
   },
 
   /**
    * 设置 Audio 实例
-   * @param instance 
-   * @returns 
+   * @param instance
+   * @returns
    */
-  setInstance: (instance) => {
+  setInstance: (instance, autoPlay = false) => {
+    const { eventListener, togglePlay } = get();
     set(() => ({ instance }));
-    get().eventListener();
+    eventListener();
+
+    if (autoPlay) togglePlay(true);
     return instance;
   },
 
   /**
    * 设置歌词数据
-   * @param lyric 
+   * @param lyric
    */
   setLyric: (lyric) => {
     set(() => ({ lyric }));
@@ -49,21 +53,22 @@ export const usePlayMusicStore = create<PlayMusicStateType>((set, get) => ({
 
   /**
    * 切换播放状态，参数为空时自动取反
-   * @param isPlay 
+   * @param isPlay
    */
   togglePlay: async (isPlay) => {
-    if (isPlay === undefined) isPlay = !get().isPlay;
+    const { isPlay: _isPlay, instance } = get();
+    if (isPlay === undefined) isPlay = !_isPlay;
 
-    if (isPlay) await get().instance?.play();
-    else get().instance?.pause();
+    if (isPlay) await instance?.play();
+    else instance?.pause();
 
     set(() => ({ isPlay }));
   },
 
   /**
    * 监听播放状态
-   * @param remove 
-   * @returns 
+   * @param remove
+   * @returns
    */
   eventListener: (remove = false) => {
     const { instance, seekUpdate, togglePlay } = get();
@@ -91,5 +96,9 @@ export const usePlayMusicStore = create<PlayMusicStateType>((set, get) => ({
       duration: instance?.duration,
       progress: (instance?.currentTime! / instance?.duration!) * 100,
     }));
+  },
+
+  setCurrentPlay: (currentPlay) => {
+    set(() => ({ currentPlay }));
   },
 }));

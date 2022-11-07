@@ -14,7 +14,7 @@ export default () => {
       </Spinner>
       <Spinner loading={songLoading} height="20%">
         {songData?.songs.map((mapItem) => (
-          <PlaylistItem key={mapItem.name} dataSoure={mapItem} />
+          <PlaylistItem key={mapItem.id} dataSoure={mapItem} />
         ))}
       </Spinner>
     </>

@@ -15,15 +15,21 @@ export const usePlaylistDetail = (id?: string) => {
     id = playListId;
   }
 
-  return useQuery(["playListDetail", id], () => getPlayListDetail(id!));
+  return useQuery(["playlistDetail", id], () => getPlayListDetail(id!), {
+    enabled: !!id,
+  });
 };
 
 /**
  * 根据歌单歌曲列表请求完整歌单列表
- * @param ids 
- * @returns 
+ * @param ids
+ * @returns
  */
 export const usePlaylistFullSong = (ids: { id: number }[]) => {
   const fullSongIds = ids.map((mapItem) => mapItem.id);
-  return useQuery(["playListDetailFullSong", fullSongIds], () => getSongDetail(fullSongIds));
+  return useQuery(
+    ["playlistDetailSong", fullSongIds],
+    () => getSongDetail(fullSongIds),
+    { enabled: !!ids.length }
+  );
 };

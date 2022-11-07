@@ -1,11 +1,40 @@
 import { Link } from "react-router-dom";
-import { GetSongDetailType } from "../../api/song/type";
+import { getSongPlayUrl } from "../../api/song";
+import type { SongDetailType } from "../../api/song/type";
+import { usePlayMusicStore } from "../../store";
 import { millisToMinutesAndSeconds } from "../../utils";
 import { LikeIcon } from "../IconPark";
 
-export default ({ dataSoure }: { dataSoure: GetSongDetailType["song"] }) => {
+export default ({ dataSoure }: { dataSoure: SongDetailType }) => {
+  const setPlayShow = usePlayMusicStore((state) => state.togglePlayerShow);
+  const currentPlay = usePlayMusicStore((state) => state.currentPlay);
+
+  const setPlayInstance = usePlayMusicStore((state) => state.setInstance);
+  const setCurrentPlay = usePlayMusicStore((state) => state.setCurrentPlay);
+
+  /**
+   * 点击歌曲播放
+   * @param musicInfo 歌曲 ID
+   * @returns
+   */
+  const onItemClick = async (musicInfo: SongDetailType) => {
+    if (currentPlay?.id === musicInfo.id) {
+      setPlayShow();
+      return;
+    }
+
+    const result = (await getSongPlayUrl(musicInfo.id, "standard"))?.[0];
+    if (!result) return;
+
+    setPlayInstance(new Audio(result.url), true);
+    setCurrentPlay(musicInfo);
+  };
+
   return (
-    <div className="flex group items-center p-2 rounded-xl select-none transition-all duration-300 hover:bg-[#f5f5f7]">
+    <div
+      className="flex group items-center p-2 rounded-xl select-none transition-all duration-300 hover:bg-[#f5f5f7] cursor-pointer"
+      onClick={() => onItemClick(dataSoure)}
+    >
       <div className="flex flex-1 mr-5 items-center justify-start">
         <img
           className="rounded-lg w-12 h-12 aspect-square cursor-pointer"

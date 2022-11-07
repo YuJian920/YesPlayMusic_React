@@ -41,3 +41,8 @@ export interface ParsedLyric {
   rawTime: string;
   content: string;
 }
+
+/**
+ * 歌曲质量
+ */
+export type MuiscQuality = "standard" | "higher" | "exhigh" | "lossless" | "hires"
