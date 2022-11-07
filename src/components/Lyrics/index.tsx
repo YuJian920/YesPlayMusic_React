@@ -52,8 +52,8 @@ export default () => {
 
   return (
     <div
-      className="fixed z-50 inset-0 top-full flex w-screen h-screen bg-[#222222] select-none transition-all duration-[400ms]"
-      style={isShowPlayer ? { top: 0 } : {}}
+      className="fixed z-50 inset-0 flex w-screen h-screen bg-[#222222] select-none transition-all duration-[400ms]"
+      style={isShowPlayer ? { top: 0 } : { top: "100%" }}
     >
       <div
         className="absolute z-20 right-6 top-7 hover:bg-white/10 rounded-xl transition-all cursor-pointer p-2.5"

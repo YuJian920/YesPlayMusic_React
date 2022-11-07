@@ -1,5 +1,6 @@
 import { useRoutes } from "react-router-dom";
 import Lyrics from "../components/Lyrics";
+import MusicBar from "../components/MusicBar";
 import routerConfig from "../router";
 import Navigation from "./components/Navigation";
 
@@ -12,6 +13,7 @@ export default () => {
         {routerElement}
       </main>
       <Lyrics />
+      <MusicBar />
     </>
   );
 };

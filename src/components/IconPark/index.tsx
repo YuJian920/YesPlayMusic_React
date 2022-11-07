@@ -258,3 +258,21 @@ export const DownIcon = ({ width, height, color }: IconType) => (
     />
   </svg>
 );
+
+export const UpIcon = ({ width, height, color }: IconType) => (
+  <svg
+    width={width}
+    height={height}
+    viewBox="0 0 48 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M13 30L25 18L37 30"
+      stroke={color}
+      strokeWidth="4"
+      strokeLinecap="square"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
