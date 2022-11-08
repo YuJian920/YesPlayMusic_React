@@ -3,12 +3,21 @@ import { usePlayMusicStore } from "../../store";
 import { secondsToAny } from "../../utils";
 import type { MusicProgressType } from "./type";
 
-export default ({ showTime = true }: MusicProgressType) => {
+export default (props: MusicProgressType) => {
+  const {
+    height,
+    showTime = true,
+    showProgressHover = true,
+    progressColor,
+    backgroundColor,
+  } = props;
+
+  const progressRef = useRef<HTMLDivElement>(null);
+
   const playInstance = usePlayMusicStore((state) => state.instance);
   const playSeek = usePlayMusicStore((state) => state.seek);
   const playDuration = usePlayMusicStore((state) => state.duration);
   const progress = usePlayMusicStore((state) => state.progress);
-  const progressRef = useRef<HTMLDivElement>(null);
 
   /**
    * 进度条点击跳转进度
@@ -27,24 +36,34 @@ export default ({ showTime = true }: MusicProgressType) => {
   };
 
   return (
-    <div className="flex justify-between items-center w-full text-white">
+    <div
+      className="flex justify-between items-center w-full text-white"
+      style={backgroundColor ? { backgroundColor: `${backgroundColor}` } : {}}
+    >
       {showTime && (
-        <span className="tabular-nums">{secondsToAny(playSeek)}</span>
+        <span className="tabular-nums mr-3">{secondsToAny(playSeek)}</span>
       )}
       <div
-        className="group flex items-center rounded-xl bg-white/40 flex-1 h-1 mx-3 cursor-pointer"
+        className="group flex items-center rounded-xl bg-white/40 flex-1 h-1 cursor-pointer"
+        style={{ height: `${height || ""}` }}
         onClick={onProgressClick}
         ref={progressRef}
       >
         <div
-          className="relative bg-white rounded-xl h-full transition-all flex items-center"
-          style={{ width: `${progress}%` }}
+          className="relative rounded-xl h-1 transition-all flex items-center"
+          style={{
+            width: `${progress}%`,
+            height: `${height || ""}`,
+            backgroundColor: `${progressColor || "#ffffff"}`,
+          }}
         >
-          <div className="absolute -right-1.5 invisible group-hover:visible bg-white rounded-full w-3 h-3 -ml-2 transition-all"></div>
+          {showProgressHover && (
+            <div className="absolute -right-1.5 invisible group-hover:visible bg-white rounded-full w-3 h-3 -ml-2 transition-all" />
+          )}
         </div>
       </div>
       {showTime && (
-        <span className="tabular-nums">{secondsToAny(playDuration)}</span>
+        <span className="tabular-nums ml-3">{secondsToAny(playDuration)}</span>
       )}
     </div>
   );
