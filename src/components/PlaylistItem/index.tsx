@@ -63,7 +63,7 @@ export default ({ dataSoure }: { dataSoure: SongDetailType }) => {
         </Link>
       </div>
       <div className="flex items-center mr-2.5">
-        <div className="mr-6 invisible group-hover:visible cursor-pointer transition-all duration-200 hover:scale-125">
+        <div className="mr-6 invisible group-hover:visible cursor-pointer transition-all duration-200 transform hover:scale-125">
           <LikeIcon width="18" height="18" color="#335eea" />
         </div>
         <span className="text-base justify-end opacity-90 tabular-nums">

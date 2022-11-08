@@ -11,9 +11,9 @@ export default ({ dataSoure }: { dataSoure: PlayListDetailType }) => {
         <img src={coverImgUrl} alt="playlist cover" className="rounded-xl" />
         <img
           src={coverImgUrl}
-          className="absolute z-[-1] top-3 rounded-xl scale-100 blur-lg opacity-60"
+          className="absolute -z-1 top-3 rounded-xl transform scale-100 filter blur-lg opacity-60"
         />
-        <div className="absolute inset-0 flex justify-center items-center transition-all duration-200 m-auto bg-white/[.14] hover:bg-white/[.3] rounded-full backdrop-blur-md h-[18%] w-[18%] opacity-0 group-hover:opacity-100 cursor-pointer">
+        <div className="absolute inset-0 flex justify-center items-center transition-all duration-200 m-auto bg-white/[.14] hover:bg-white/[.3] rounded-full backdrop-filter backdrop-blur-md h-[18%] w-[18%] opacity-0 group-hover:opacity-100 cursor-pointer">
           <PlayIcon width="35" height="35" color="#ffffff" />
         </div>
       </div>
@@ -36,14 +36,14 @@ export default ({ dataSoure }: { dataSoure: PlayListDetailType }) => {
           {description}
         </div>
         <div className="flex mt-8">
-          <button className="flex justify-center items-center rounded-lg py-2 px-3 w-auto mr-4 text-lg font-semibold bg-[#eaeffd] text-[#335eea] transition-all duration-200 hover:scale-105">
+          <button className="flex justify-center items-center rounded-lg py-2 px-3 w-auto mr-4 text-lg transform font-semibold bg-[#eaeffd] text-[#335eea] transition-all duration-200 hover:scale-105">
             <PlayIcon width="27" height="27" color="#335eea" />
             <span className="ml-1 mr-1">播放</span>
           </button>
-          <button className="flex justify-center items-center rounded-lg py-2 px-3 w-auto mr-4 text-lg font-semibold bg-[#eaeffd] text-[#335eea] transition-all duration-200 hover:scale-105">
+          <button className="flex justify-center items-center rounded-lg py-2 px-3 w-auto mr-4 text-lg transform font-semibold bg-[#eaeffd] text-[#335eea] transition-all duration-200 hover:scale-105">
             <LikeIcon width="22" height="22" color="#000000" />
           </button>
-          <button className="flex justify-center items-center rounded-lg py-2 px-3 w-auto mr-4 text-lg font-semibold bg-[#eaeffd] text-[#335eea] transition-all duration-200 hover:scale-105">
+          <button className="flex justify-center items-center rounded-lg py-2 px-3 w-auto mr-4 text-lg transform font-semibold bg-[#eaeffd] text-[#335eea] transition-all duration-200 hover:scale-105">
             <MoreIcon width="22" height="22" color="#000000" />
           </button>
         </div>

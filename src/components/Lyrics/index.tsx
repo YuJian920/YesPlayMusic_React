@@ -73,7 +73,7 @@ export default () => {
             alt=""
           />
           <img
-            className="absolute z-[-1] top-3 rounded-xl scale-90 blur-xl opacity-70"
+            className="absolute -z-1 top-3 rounded-xl transform scale-90 filter blur-xl opacity-70"
             src={currentPlay?.al.picUrl || ""}
           />
         </div>
@@ -95,7 +95,7 @@ export default () => {
               </Link>
             </div>
           </div>
-          <div className="cursor-pointer transition-all duration-200 hover:scale-125">
+          <div className="cursor-pointer transition-all duration-200 transform hover:scale-125">
             <LikeIcon width="24" height="24" color="#ffffff" />
           </div>
         </div>

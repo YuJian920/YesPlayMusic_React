@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { PlayIcon } from "../IconPark";
 import type { AlbumUnitType } from "./type";
 
-const AlbumUnit = (props: AlbumUnitType) => {
+export default (props: AlbumUnitType) => {
   const { id, name, picUrl, des, circle = false } = props;
 
   return (
@@ -18,12 +18,12 @@ const AlbumUnit = (props: AlbumUnitType) => {
             />
             <img
               style={circle ? { borderRadius: 9999 } : {}}
-              className="rounded-xl absolute z-[-1] inset-0 h-full w-full scale-90 transition-all duration-500 group-hover:top-3 group-hover:blur-lg group-hover:opacity-60 group-hover:scale-100"
+              className="rounded-xl absolute -z-1 inset-0 h-full w-full filter transform scale-90 transition-all duration-500 group-hover:top-3 group-hover:blur-lg group-hover:opacity-60 group-hover:scale-100"
               src={`${picUrl}?param=512y512`}
               loading="lazy"
             />
           </div>
-          <div className="opacity-0 flex transition-all duration-500 absolute inset-0 m-auto justify-center items-center bg-white/[.14] hover:bg-white/[.3] rounded-full backdrop-blur-md h-[22%] w-[22%] group-hover:opacity-100">
+          <div className="opacity-0 flex transition-all duration-500 absolute inset-0 m-auto justify-center items-center bg-white/[.14] hover:bg-white/[.3] rounded-full backdrop-filter backdrop-blur-md h-[22%] w-[22%] group-hover:opacity-100">
             <PlayIcon width="34" height="34" color="#ffffff" />
           </div>
         </div>
@@ -46,5 +46,3 @@ const AlbumUnit = (props: AlbumUnitType) => {
     </div>
   );
 };
-
-export default AlbumUnit;

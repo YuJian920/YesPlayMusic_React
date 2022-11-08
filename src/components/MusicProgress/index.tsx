@@ -12,7 +12,7 @@ export default ({ showTime = true }: MusicProgressType) => {
 
   /**
    * 进度条点击跳转进度
-   * @param event
+   * @param e
    * @returns
    */
   const onProgressClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {

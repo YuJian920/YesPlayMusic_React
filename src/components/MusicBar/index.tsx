@@ -18,7 +18,7 @@ export default () => {
 
   return (
     <div
-      className="fixed z-40 bottom-0 left-0 right-0 flex flex-col w-screen h-16 select-none bg-white/80 backdrop-blur-xl backdrop-saturate-200 transition-all duration-300"
+      className="fixed z-40 bottom-0 left-0 right-0 flex flex-col w-screen h-16 select-none bg-white/80 backdrop-filter backdrop-blur-xl backdrop-saturate-200 transition-all duration-300"
       style={currentPlay ? { bottom: 0 } : { bottom: "-10%" }}
     >
       <div className="grid grid-cols-3 pl-[10vw] pr-[10vw] h-full">

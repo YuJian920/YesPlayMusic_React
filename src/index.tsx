@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import 'virtual:windi.css';
 import "./assets/style/index.css";
 import Layout from "./layout";
 import AppProvider from "./providers";
