@@ -7,6 +7,7 @@ export default () => {
   const playSeek = usePlayMusicStore((state) => state.seek);
   const playLyric = usePlayMusicStore((state) => state.lyric);
 
+  // 计算当前正在播放歌词 index
   const lyricIndex = useMemo(
     () =>
       playLyric.findIndex((findItem, index, oringArr) => {

@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { getSongLyric } from "../../api/song";
 import { usePlayMusicStore } from "../../store";
-import { parseLyric } from "../../utils/parserLyric";
 import {
   DownIcon,
   LikeIcon,
@@ -23,15 +21,10 @@ export default () => {
   const isPlayStatus = usePlayMusicStore((state) => state.isPlay);
   const isShowPlayer = usePlayMusicStore((state) => state.isShowPlayer);
   const currentPlay = usePlayMusicStore((state) => state.currentPlay);
+  const playLyric = usePlayMusicStore((state) => state.lyric);
 
-  const setPlayLyric = usePlayMusicStore((state) => state.setLyric);
   const setPlayStatus = usePlayMusicStore((state) => state.togglePlay);
   const setPlayShow = usePlayMusicStore((state) => state.togglePlayerShow);
-
-  useEffect(() => {
-    if (!currentPlay?.id) return;
-    getMusicLyric(currentPlay?.id || 0);
-  }, [currentPlay?.id]);
 
   // 歌曲封面的弹簧缩放效果
   const coverSpringStyle = isPlayStatus ? { transform: "scale(1.05)" } : { transform: "scale(0.95)" };
@@ -41,14 +34,13 @@ export default () => {
     else coverRef.current.style.animation = "";
   }, [isPlayStatus]);
 
-  /**
-   * 获取歌词
-   * @param id 
-   */
-  const getMusicLyric = async (id: number) => {
-    const { lrc } = await getSongLyric(id);
-    setPlayLyric(parseLyric(lrc?.lyric || ""));
-  };
+  // 判断是否纯音乐，纯音乐默认不显示歌词
+  useEffect(() => {
+    const isPureMusic = playLyric.findIndex(
+      (findItem) => findItem.content === "纯音乐，请欣赏"
+    );
+    if (isPureMusic !== -1) setShowLyric(false);
+  }, [playLyric]);
 
   return (
     <div

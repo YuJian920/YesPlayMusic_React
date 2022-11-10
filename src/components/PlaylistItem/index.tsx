@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { getSongPlayUrl } from "../../api/song";
+import { getSongLyric, getSongPlayUrl } from "../../api/song";
 import type { SongDetailType } from "../../api/song/type";
 import { usePlayMusicStore } from "../../store";
 import { millisToMinutesAndSeconds } from "../../utils";
+import { parseLyric } from "../../utils/parserLyric";
 import { LikeIcon } from "../IconPark";
 
 export default ({ dataSoure }: { dataSoure: SongDetailType }) => {
@@ -11,6 +12,7 @@ export default ({ dataSoure }: { dataSoure: SongDetailType }) => {
 
   const setPlayInstance = usePlayMusicStore((state) => state.setInstance);
   const setCurrentPlay = usePlayMusicStore((state) => state.setCurrentPlay);
+  const setPlayLyric = usePlayMusicStore((state) => state.setLyric);
 
   /**
    * 点击歌曲播放
@@ -26,8 +28,11 @@ export default ({ dataSoure }: { dataSoure: SongDetailType }) => {
     const result = (await getSongPlayUrl(musicInfo.id, "standard"))?.[0];
     if (!result) return;
 
+    const { lrc } = await getSongLyric(musicInfo.id);
+
     setPlayInstance(new Audio(result.url), true);
     setCurrentPlay(musicInfo);
+    setPlayLyric(parseLyric(lrc?.lyric || ""));
   };
 
   return (

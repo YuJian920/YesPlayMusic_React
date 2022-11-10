@@ -56,11 +56,11 @@ export default () => {
           </div>
         </div>
         <div className="flex items-center justify-center">
-          <div className="hover:bg-white/10 rounded-xl transition-all cursor-pointer mx-2">
+          <div className="hover:bg-gray-300/[.28] rounded-md p-1 transition-all cursor-pointer mx-2">
             <PreIcon width="24" height="24" color="#000000" />
           </div>
           <div
-            className="hover:bg-white/10 rounded-xl transition-all cursor-pointer mx-2"
+            className="hover:bg-gray-300/[.28] rounded-xl transition-all cursor-pointer mx-2"
             onClick={() => setPlayStatus()}
           >
             {isPlayStatus ? (
@@ -69,7 +69,7 @@ export default () => {
               <PlayIcon width="38" height="38" color="#000000" />
             )}
           </div>
-          <div className="hover:bg-white/10 rounded-xl transition-all cursor-pointer mx-2">
+          <div className="hover:bg-gray-300/[.28] rounded-md p-1 transition-all cursor-pointer mx-2">
             <NextIcon width="24" height="24" color="#000000" />
           </div>
         </div>
