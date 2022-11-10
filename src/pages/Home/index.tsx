@@ -6,14 +6,12 @@ export default () => {
   const { data, isLoading } = usePersonalizedList(10);
   return (
     <Spinner loading={isLoading}>
-      <div>
-        <AlbumList
-          dataSoure={data?.result || []}
-          title="推荐歌单"
-          style={{ marginTop: "2rem" }}
-        />
-        {/* <AlbumList style={{ marginTop: "3.375rem" }} /> */}
-      </div>
+      <AlbumList
+        dataSoure={data?.result || []}
+        title="推荐歌单"
+        style={{ marginTop: "2rem" }}
+      />
+      {/* <AlbumList style={{ marginTop: "3.375rem" }} /> */}
     </Spinner>
   );
 };

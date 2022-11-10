@@ -7,11 +7,11 @@ const linkDict = [
   },
   {
     name: "发现",
-    path: "/",
+    path: "/explore",
   },
   {
     name: "音乐库",
-    path: "/",
+    path: "/login",
   },
 ];
 

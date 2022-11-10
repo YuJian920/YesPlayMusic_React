@@ -1,25 +1,6 @@
 import { AlbumType, ArtistType, BaseResponse } from "../../type";
 
 /**
- * 所有榜单
- */
-export interface GetTopListType extends BaseResponse {
-  coverUrl: string;
-  name: string;
-  upateFrequency: string;
-  updateFrequency: string;
-  list: TopListType[];
-}
-
-export interface TopListType {
-  coverImgId: number;
-  coverImgUrl: string;
-  description: string;
-  name: string;
-  updateFrequency: string;
-}
-
-/**
  * 推荐歌单
  */
 export interface GetPersonalizedListType extends BaseResponse {
@@ -61,4 +42,20 @@ export interface PlayListDetailType {
     userId: number;
     nickname: string;
   };
+}
+
+/**
+ * 歌单 ( 网友精选碟 )
+ */
+export interface GetTopPlayListType extends BaseResponse {
+  cat: string;
+  more: boolean;
+  total: number;
+  playlists: TopPlayListType[];
+}
+
+export interface TopPlayListType {
+  id: number;
+  name: string;
+  coverImgUrl: string;
 }

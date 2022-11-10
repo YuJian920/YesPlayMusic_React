@@ -1,11 +1,11 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import { swcReactRefresh } from "vite-plugin-swc-react-refresh"
 import WindiCSS from "vite-plugin-windicss";
 
 // https://vitejs.dev/config/
 
 export default defineConfig({
-  plugins: [react(), WindiCSS()],
+  plugins: [swcReactRefresh(), WindiCSS()],
   server: {
     proxy: {
       "/api": {

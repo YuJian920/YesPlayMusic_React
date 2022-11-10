@@ -276,3 +276,46 @@ export const UpIcon = ({ width, height, color }: IconType) => (
     />
   </svg>
 );
+
+export const XIcon = ({ width, height, color }: IconType) => (
+  <svg
+    width={width}
+    height={height}
+    viewBox="0 0 48 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M14 14L34 34"
+      stroke={color}
+      strokeWidth="4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M14 34L34 14"
+      stroke={color}
+      strokeWidth="4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const RightIcon = ({ width, height, color }: IconType) => (
+  <svg
+    width={width}
+    height={height}
+    viewBox="0 0 48 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M19 12L31 24L19 36"
+      stroke={color}
+      strokeWidth="4"
+      strokeLinecap="square"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
