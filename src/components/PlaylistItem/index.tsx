@@ -1,18 +1,13 @@
 import { Link } from "react-router-dom";
-import { getSongLyric, getSongPlayUrl } from "../../api/song";
 import type { SongDetailType } from "../../api/song/type";
 import { usePlayMusicStore } from "../../store";
 import { millisToMinutesAndSeconds } from "../../utils";
-import { parseLyric } from "../../utils/parserLyric";
 import { LikeIcon } from "../IconPark";
 
 export default ({ dataSoure }: { dataSoure: SongDetailType }) => {
   const setPlayShow = usePlayMusicStore((state) => state.togglePlayerShow);
   const currentPlay = usePlayMusicStore((state) => state.currentPlay);
-
-  const setPlayInstance = usePlayMusicStore((state) => state.setInstance);
   const setCurrentPlay = usePlayMusicStore((state) => state.setCurrentPlay);
-  const setPlayLyric = usePlayMusicStore((state) => state.setLyric);
 
   /**
    * 点击歌曲播放
@@ -24,20 +19,17 @@ export default ({ dataSoure }: { dataSoure: SongDetailType }) => {
       setPlayShow();
       return;
     }
-
-    const result = (await getSongPlayUrl(musicInfo.id, "standard"))?.[0];
-    if (!result) return;
-
-    const { lrc } = await getSongLyric(musicInfo.id);
-
-    setPlayInstance(new Audio(result.url), true);
-    setCurrentPlay(musicInfo);
-    setPlayLyric(parseLyric(lrc?.lyric || ""));
+    setCurrentPlay(musicInfo, "standard");
   };
 
   return (
     <div
       className="flex group items-center p-2 rounded-xl select-none transition-all duration-300 hover:bg-[#f5f5f7] cursor-pointer"
+      style={
+        currentPlay?.id === dataSoure.id
+          ? { backgroundColor: "#eaeffd", color: "#335eea" }
+          : {}
+      }
       onClick={() => onItemClick(dataSoure)}
     >
       <div className="flex flex-1 mr-5 items-center justify-start">
@@ -47,10 +39,13 @@ export default ({ dataSoure }: { dataSoure: SongDetailType }) => {
           alt=""
         />
         <div className="flex flex-col pl-4">
-          <div className="text-lg font-semibold break-all overflow-hidden">
+          <div className="text-lg font-semibold break-all overflow-hidden line-clamp-1">
             <span>{dataSoure.name}</span>
             {dataSoure.alia.length ? (
-              <span className="text-[#7a7a7a] opacity-70 mr-1">
+              <span
+                className="text-[#7a7a7a] opacity-70 mr-1"
+                title={dataSoure.alia[0] || ""}
+              >
                 （{dataSoure.alia[0] || ""}）
               </span>
             ) : null}

@@ -1,9 +1,17 @@
 import { PlayListDetailType } from "../../api/playlist/type";
+import { usePlayMusicStore } from "../../store";
 import { timestampToYMD } from "../../utils";
 import { LikeIcon, MoreIcon, PlayIcon } from "../IconPark";
 
 export default ({ dataSoure }: { dataSoure: PlayListDetailType }) => {
-  const { coverImgUrl, name, description, updateTime, trackCount, creator } = dataSoure;
+  const { coverImgUrl, name, description, updateTime } = dataSoure;
+  const { trackCount, creator, trackIds } = dataSoure;
+
+  const setPlaylist = usePlayMusicStore((state) => state.setPlaylist);
+
+  const playPlatlistById = (playlistId: typeof trackIds) => {
+    setPlaylist(playlistId.map((mapItem) => mapItem.id));
+  };
 
   return (
     <div className="flex mb-16 mt-8">
@@ -36,7 +44,10 @@ export default ({ dataSoure }: { dataSoure: PlayListDetailType }) => {
           {description}
         </div>
         <div className="flex mt-8">
-          <button className="flex justify-center items-center rounded-lg py-2 px-3 w-auto mr-4 text-lg transform font-semibold bg-[#eaeffd] text-[#335eea] transition-all duration-200 hover:scale-105">
+          <button
+            className="flex justify-center items-center rounded-lg py-2 px-3 w-auto mr-4 text-lg transform font-semibold bg-[#eaeffd] text-[#335eea] transition-all duration-200 hover:scale-105"
+            onClick={() => playPlatlistById(trackIds)}
+          >
             <PlayIcon width="27" height="27" color="#335eea" />
             <span className="ml-1 mr-1">播放</span>
           </button>

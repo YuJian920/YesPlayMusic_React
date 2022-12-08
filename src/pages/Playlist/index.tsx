@@ -8,15 +8,13 @@ export default () => {
   const { data: songData, isLoading: songLoading } = usePlaylistFullSong(detailData?.trackIds || []);
 
   return (
-    <>
-      <Spinner loading={detailLoading}>
-        <PlaylistInfo dataSoure={detailData!} />
-      </Spinner>
+    <Spinner loading={detailLoading}>
+      <PlaylistInfo dataSoure={detailData!} />
       <Spinner loading={songLoading} height="20%">
         {songData?.songs.map((mapItem) => (
           <PlaylistItem key={mapItem.id} dataSoure={mapItem} />
         ))}
       </Spinner>
-    </>
+    </Spinner>
   );
 };

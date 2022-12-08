@@ -1,5 +1,5 @@
 import type { SongDetailType } from "../api/song/type";
-import type { ParsedLyric } from "../type";
+import type { MuiscQuality, ParsedLyric } from "../type";
 
 export interface PlayMusicStateType {
   isShowPlayer: boolean;
@@ -10,12 +10,19 @@ export interface PlayMusicStateType {
   progress: number;
   lyric: ParsedLyric[];
   currentPlay: SongDetailType | null;
+  playlistIndex: number;
+  playlist: number[];
+  priorityPlaylist: number[];
 
   togglePlayerShow: (isShowPlayer?: boolean) => void;
   setInstance: (instance: HTMLAudioElement, autoPlay?: boolean) => HTMLAudioElement;
   setLyric: (instance: ParsedLyric[]) => void;
   togglePlay: (isPlay?: boolean) => void;
-  eventListener: (remove?: boolean) => void;
+  eventListener: (instance: HTMLAudioElement | null, remove?: boolean) => void;
   seekUpdate: () => void;
-  setCurrentPlay: (currentPlay: SongDetailType) => void;
+  setCurrentPlay: (songInfo: SongDetailType, level: MuiscQuality) => void;
+  setPlaylist: (playlist: number[]) => void;
+  setPriorityPlaylist: (priorityPlaylist: number[]) => void;
+  setPlaylistIndex: (setPlaylistIndex: number) => void;
+  checkPlaylist: () => void;
 }
