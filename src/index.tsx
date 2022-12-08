@@ -1,14 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import 'virtual:windi.css';
+import "virtual:windi.css";
 import "./assets/style/index.css";
-import Layout from "./layout";
 import AppProvider from "./providers";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <AppProvider>
-      <Layout />
-    </AppProvider>
+    <AppProvider />
   </React.StrictMode>
 );

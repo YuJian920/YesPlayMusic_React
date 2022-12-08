@@ -37,7 +37,7 @@ export default () => {
   // 判断是否纯音乐，纯音乐默认不显示歌词
   useEffect(() => {
     const isPureMusic = playLyric.findIndex(
-      (findItem) => findItem.content === "纯音乐，请欣赏"
+      ({ content }) => content === "纯音乐，请欣赏"
     );
     if (isPureMusic !== -1) setShowLyric(false);
   }, [playLyric]);

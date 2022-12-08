@@ -1,6 +1,6 @@
-import { BrowserRouter } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import type { AppProviderProps } from "./type";
+import routerConfig from "../router";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -10,9 +10,9 @@ const queryClient = new QueryClient({
   },
 });
 
-const AppProvider = ({ children }: AppProviderProps) => (
+const AppProvider = () => (
   <QueryClientProvider client={queryClient}>
-    <BrowserRouter>{children}</BrowserRouter>
+    <RouterProvider router={routerConfig} />
   </QueryClientProvider>
 );
 

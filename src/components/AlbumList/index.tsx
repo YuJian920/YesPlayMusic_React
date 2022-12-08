@@ -10,13 +10,8 @@ const AlbumList = (props: AlbumListType) => {
         {title}
       </span>
       <div className="grid grid-cols-5 gap-y-11 gap-x-6">
-        {dataSoure.map((mapItem) => (
-          <AlbumUnit
-            key={mapItem.id}
-            id={mapItem.id}
-            name={mapItem.name}
-            picUrl={mapItem.picUrl}
-          />
+        {dataSoure.map(({ id, name, picUrl }) => (
+          <AlbumUnit key={id} id={id} name={name} picUrl={picUrl} />
         ))}
       </div>
     </>

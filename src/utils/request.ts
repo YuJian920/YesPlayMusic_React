@@ -1,21 +1,20 @@
 import { stringify } from "qs";
 import type { RequestOptions } from "../type";
 
-const baseURL = import.meta.env.DEV ? "/api" : "";
+const baseURL = "http://localhost:3000";
 
 export default async <T>(
   endpoint: string,
   option: RequestOptions = {}
-): Promise<Awaited<T>> => {
+): Promise<T> => {
   const data = option.data || option;
   const path = `${baseURL}${endpoint}` + (data ? `?${stringify(data)}` : "");
-  return fetch(path)
-    .then(async (response) => {
-      const result = await response.json();
-      if (response.ok) return result;
-      else return Promise.reject(result);
-    })
-    .catch((error) => {
-      return Promise.reject(error);
-    });
+  try {
+    const response = await fetch(path);
+    const result = await response.json();
+    if (response.ok) return result;
+    else return Promise.reject(result);
+  } catch (error) {
+    return Promise.reject(error);
+  }
 };
