@@ -10,7 +10,8 @@ export default () => {
   // 计算当前正在播放歌词 index
   const lyricIndex = useMemo(() => {
     return playLyric.findIndex((findItem, index, oringArr) => {
-      if (index === oringArr.length - 1) return oringArr.length;
+      // 如果超出时长判断下标越界问题
+      if (playSeek >= oringArr[oringArr.length - 1].time) return index === oringArr.length - 1;
       return playSeek >= findItem.time && playSeek < oringArr[index + 1].time;
     });
   }, [playSeek]);
@@ -36,7 +37,7 @@ export default () => {
 
   return (
     <div
-      className="flex flex-col text-3xl text-white font-semibold w-full"
+      className="flex flex-col text-3xl text-white font-semibold w-[90%]"
       ref={lyricRef}
     >
       <span className="mt-[50vh]" />
