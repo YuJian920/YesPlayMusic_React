@@ -1,6 +1,6 @@
-import type { PersonalizedListType } from "../../api/playlist/type";
+import type { PersonalizedListType } from '../../api/playlist/type';
 
 export type AlbumUnitType = PersonalizedListType & {
-  des?: string;
-  circle?: boolean;
+	des?: string;
+	circle?: boolean;
 };
