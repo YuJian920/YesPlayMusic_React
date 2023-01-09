@@ -1,7 +1,9 @@
 import { usePlayMusicStore } from '../store';
 
 const useSwitchMusic = () => {
-	const { playlist, playlistIndex, setPlaylistIndex } = usePlayMusicStore();
+	const playlist = usePlayMusicStore((state) => state.playlist);
+	const playlistIndex = usePlayMusicStore((state) => state.playlistIndex);
+	const setPlaylistIndex = usePlayMusicStore((state) => state.setPlaylistIndex);
 
 	const switchMusic = (type: 'pre' | 'next') => {
 		if (type === 'pre') {

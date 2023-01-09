@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import useSwitchMusic from '../../hooks/useSwitchMusic';
-import { usePlayMusicStore } from '../../store';
 import { LikeIcon, NextIcon, PauseIcon, PlayIcon, PreIcon, UpIcon } from '../IconPark';
 import MusicProgress from '../MusicProgress';
+import useMusicBar from './useMusicBar';
 
 const MusicBar = () => {
-	const { isPlay, currentPlay, togglePlay, togglePlayerShow } = usePlayMusicStore();
+	const { isPlay, currentPlay, togglePlay, togglePlayerShow } = useMusicBar();
 	const { switchMusicPre, switchMusicNext } = useSwitchMusic();
 
 	return (

@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useSwitchMusic from '../../hooks/useSwitchMusic';
-import { usePlayMusicStore } from '../../store';
 import { DownIcon, LikeIcon, NextIcon, PauseIcon, PlayCycleIcon, PlayIcon, PreIcon, ShuffleIcon } from '../IconPark';
 import LyricLine from '../LyricLine';
 import MusicProgress from '../MusicProgress';
+import useLyrics from './useLyrics';
 
 const Lyrics = () => {
 	const coverRef = useRef<HTMLDivElement>(null);
 	const [showLyric, setShowLyric] = useState(true);
-	const { isPlay, isShowPlayer, currentPlay, lyric, togglePlay, togglePlayerShow } = usePlayMusicStore();
+	const { isPlay, isShowPlayer, currentPlay, lyric, togglePlay, togglePlayerShow } = useLyrics();
 	const { switchMusicPre, switchMusicNext } = useSwitchMusic();
 
 	useEffect(() => {

@@ -1,17 +1,12 @@
 import { useRef } from 'react';
-import { usePlayMusicStore } from '../../store';
 import { secondsToAny } from '../../utils';
 import type { MusicProgressType } from './type';
+import useMusicProgress from './useMusicProgress';
 
 const MusicProgress = (props: MusicProgressType) => {
 	const { height, showTime = true, showProgressHover = true, progressColor, backgroundColor } = props;
-
+	const { playInstance, playSeek, playDuration, progress } = useMusicProgress();
 	const progressRef = useRef<HTMLDivElement>(null);
-
-	const playInstance = usePlayMusicStore((state) => state.instance);
-	const playSeek = usePlayMusicStore((state) => state.seek);
-	const playDuration = usePlayMusicStore((state) => state.duration);
-	const progress = usePlayMusicStore((state) => state.progress);
 
 	/**
 	 * 进度条点击跳转进度

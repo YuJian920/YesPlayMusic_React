@@ -1,14 +1,11 @@
 import { Link } from 'react-router-dom';
 import type { GetSongDetailType, SongDetailType } from '../../api/song/type';
-import { usePlayMusicStore } from '../../store';
 import { millisToMinutesAndSeconds } from '../../utils';
 import { LikeIcon } from '../IconPark';
+import usePlaylistItem from './usePlaylistItem';
 
 const PlaylistItem = ({ itemDetail, originData }: { itemDetail: SongDetailType; originData: GetSongDetailType }) => {
-	const setPlayShow = usePlayMusicStore((state) => state.togglePlayerShow);
-	const currentPlay = usePlayMusicStore((state) => state.currentPlay);
-	const setPlaylist = usePlayMusicStore((state) => state.setPlaylist);
-	const checkPlaylist = usePlayMusicStore((state) => state.checkPlaylist);
+	const { setPlayShow, currentPlay, setPlaylist, checkPlaylist } = usePlaylistItem();
 
 	/**
 	 * 点击歌曲播放

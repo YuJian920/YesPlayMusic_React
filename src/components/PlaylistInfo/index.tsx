@@ -6,7 +6,8 @@ import { LikeIcon, MoreIcon, PlayIcon } from '../IconPark';
 const PlaylistInfo = ({ dataSoure }: { dataSoure: PlayListDetailType }) => {
 	const { coverImgUrl, name, description, updateTime } = dataSoure;
 	const { trackCount, creator, trackIds } = dataSoure;
-	const { setPlaylist, checkPlaylist } = usePlayMusicStore();
+	const setPlaylist = usePlayMusicStore((state) => state.setPlaylist);
+	const checkPlaylist = usePlayMusicStore((state) => state.checkPlaylist);
 
 	/**
 	 * 点击歌单播放按钮
